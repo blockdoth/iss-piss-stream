@@ -1,5 +1,4 @@
-
- .idea
- .envrc
- .direnv
- 
+.idea
+.envrc
+.direnv
+pisslog.csv 
