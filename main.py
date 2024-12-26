@@ -29,7 +29,7 @@ class SubListener(SubscriptionListener):
     date = datetime.now() - timedelta(milliseconds=float(timestamp))
     formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
     
-    print(f"[{formatted_date}] ISS Piss tank level: {value}%")
+    print(f"[{formatted_date}] ISS Piss tank level: {value}%", flush=True)
     
     with open(self.file_path, "a") as file:
       file.write(formatted_date + ", " + value + "\n")

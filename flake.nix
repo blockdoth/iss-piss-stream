@@ -19,13 +19,13 @@
       };
     in
     {
-      packages.${system} = {
+      packages.${system}.default = {
         iss-piss-stream = pkgs.writers.writePython3Bin "iss-piss-stream" {
           libraries = [ lightstreamer-client-lib ];
           doCheck = false;
         } (builtins.readFile ./main.py);
-      };
-
+      }; 
+      
       devShell.x86_64-linux = pkgs.mkShell {
         packages = with pkgs; [
           lightstreamer-client-lib
