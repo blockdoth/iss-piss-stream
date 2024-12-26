@@ -22,7 +22,7 @@ class SubListener(SubscriptionListener):
   def onItemUpdate(self, update):
     value = update.getValue("Value")
     if percentage_only:
-      print(value) 
+      print(value, flush=True) 
       return 
     timestamp = update.getValue("TimeStamp")
     
