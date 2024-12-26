@@ -28,7 +28,7 @@
         pname = "project-space-piss";
         version = "1.0.0";     
         meta.mainProgram = "project-space-piss";
-        buildInputs = [ lightstreamer-client-lib ];
+        propagatedBuildInputs = [ lightstreamer-client-lib ];
         dontUnpack = true;  
         installPhase = ''
           install -Dm755 ${./main.py} $out/bin/project-space-piss
