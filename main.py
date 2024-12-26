@@ -6,14 +6,14 @@ import time, argparse
 
 parser = argparse.ArgumentParser(description='Piss stream straight from space')
 parser.add_argument('-o','--log_file_path', type=str, default = None)
-parser.add_argument('-p','--percentage_only', action = "store_false")
+parser.add_argument('-p','--percentage_only', action = "store_true")
 args = parser.parse_args()
+percentage_only = args.percentage_only
 
 if args.log_file_path:
   log_file_path = args.log_file_path
 else:
   log_file_path = "pisslog.csv"
-
 class SubListener(SubscriptionListener):
   def __init__(self, file_path, percentage_only):
     self.file_path = file_path  
@@ -39,13 +39,14 @@ sub = Subscription(
   items=["NODE3000005"],
   fields = ["Value", "TimeStamp"]
 )
-sub.addListener(SubListener(log_file_path, args.percentage_only))
+sub.addListener(SubListener(log_file_path, percentage_only))
 sub.setRequestedSnapshot("yes")
 
 client = LightstreamerClient("http://push.lightstreamer.com","ISSLIVE")
 client.subscribe(sub)
 
-print("Connecting to stream...")
+if not percentage_only:
+  print("Connecting to stream...")
 client.connect()
 
 start_time = time.monotonic() 
@@ -53,15 +54,18 @@ timeout = 10
 
 while client.getStatus() != "CONNECTED:WS-STREAMING":
   if time.monotonic() - start_time > timeout:
-    print(f"Connection attempt timed out after {timeout} seconds.")
+    if not percentage_only:
+      print(f"Connection attempt timed out after {timeout} seconds.")
     client.disconnect()
     exit(1) 
 
-print("Connected")
+if not percentage_only:
+  print("Connected")
 
 try:
   while True:
     time.sleep(1) 
 except KeyboardInterrupt:
   client.disconnect()
-  print("\nDisconnected")
+  if not percentage_only:
+    print("\nDisconnected")

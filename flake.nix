@@ -23,7 +23,10 @@
           sha256 = "7306e42707ebc40144879854e0aa568383f37e1e006e5430f96455867761a73c";  
         };
       };
-      pythonEnv = pkgs.python3.withPackages(ps: [ lightstreamer-client-lib ]);
+      pythonEnv = pkgs.python3.withPackages(ps: [ 
+        lightstreamer-client-lib 
+        pkgs.python3Packages.matplotlib
+      ]);
 
       project-space-piss = pkgs.stdenv.mkDerivation {
         pname = "project-space-piss";
@@ -46,6 +49,7 @@
         packages = with pkgs; [
           lightstreamer-client-lib 
           python3
+          python3Packages.matplotlib
         ];
       };
     };
