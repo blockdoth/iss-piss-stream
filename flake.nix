@@ -23,12 +23,13 @@
           sha256 = "7306e42707ebc40144879854e0aa568383f37e1e006e5430f96455867761a73c";  
         };
       };
+      pythonEnv = pkgs.python3.withPackages(ps: [ lightstreamer-client-lib ]);
 
       project-space-piss = pkgs.stdenv.mkDerivation {
         pname = "project-space-piss";
         version = "1.0.0";     
         meta.mainProgram = "project-space-piss";
-        propagatedBuildInputs = [ lightstreamer-client-lib ];
+        buildInputs = [ pythonEnv ];
         dontUnpack = true;  
         installPhase = ''
           install -Dm755 ${./main.py} $out/bin/project-space-piss
