@@ -1,5 +1,5 @@
 {
-  description = "A Nix flake for a pissy environment";
+  description = "A Nix flake for a custom Python environment with lightstreamer-client-lib";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -8,35 +8,44 @@
   outputs =
     { self, nixpkgs }:
     let
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-      forEachSupportedSystem =
-        f: nixpkgs.lib.genAttrs supportedSystems (system: f { pkgs = import nixpkgs { inherit system; }; });
+      system = "x86_64-linux";    
+      pkgs = import nixpkgs { inherit system; };
+
+      lightstreamer-client-lib = pkgs.python3Packages.buildPythonPackage rec {
+        pname = "lightstreamer_client_lib";
+        version = "2.2.0"; 
+        propagatedBuildInputs = with pkgs.python3Packages; [
+          aiohttp
+          jsonpatch
+        ];
+        src = pkgs.fetchPypi {
+          inherit pname version;
+          sha256 = "7306e42707ebc40144879854e0aa568383f37e1e006e5430f96455867761a73c";  
+        };
+      };
+
+      project-space-piss = pkgs.stdenv.mkDerivation {
+        pname = "project-space-piss";
+        version = "1.0.0";     
+        meta.mainProgram = "project-space-piss";
+        buildInputs = [ lightstreamer-client-lib ];
+        dontUnpack = true;  
+        installPhase = ''
+          install -Dm755 ${./main.py} $out/bin/project-space-piss
+        '';
+      };  
     in
-    {
-      devShells = forEachSupportedSystem (
-        { pkgs }:
-        {
-          default = pkgs.mkShell {
-            shellHook = "
-              python3 -m venv .venv
-              source .venv/bin/activate
-              pip install --upgrade pip
-              pip install lightstreamer-client  
-              npm install lightstreamer-client-node
-          ";
-            packages = with pkgs; [
-              nodejs-18_x
-              python3
-              python3Packages.pip
-            ];
-          };
-        }
-      );
+    {  
+      apps.x86_64-linux.default = {
+        type = "app";
+        program = "${pkgs.lib.getExe project-space-piss}";
+      };   
+
+      devShell.x86_64-linux = pkgs.mkShell {
+        packages = with pkgs; [
+          lightstreamer-client-lib 
+          python3
+        ];
+      };
     };
 }
-
