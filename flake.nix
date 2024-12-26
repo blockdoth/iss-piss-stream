@@ -16,7 +16,7 @@
     in
     {
       packages.${system} = {
-        my-script = pkgs.writers.writePython3Bin "my-script"{ 
+        iss-piss-stream = pkgs.writers.writePython3Bin "iss-piss-stream"{ 
           libraries = [ lightstreamer-client-lib ]; 
           doCheck = false;
           }
