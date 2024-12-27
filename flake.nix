@@ -28,5 +28,12 @@
         default = inputs.self.packages.${system}.iss-piss-stream;
       };
 
+      devShell.x86_64-linux = pkgs.mkShell {
+        packages = with pkgs; [
+          inputs.self.packages.${system}.lightstreamer-client-lib
+          python3Packages.matplotlib
+          python3
+        ];
+      };
     };
 }

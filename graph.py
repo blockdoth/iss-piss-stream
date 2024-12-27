@@ -1,9 +1,10 @@
     
 import argparse, csv
 from datetime import datetime
+
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
-
+import matplotlib.dates as mdates
 
 parser = argparse.ArgumentParser(description='Pissualizer')
 parser.add_argument('-f','--log_file_path', type=str, default = None)
@@ -27,11 +28,23 @@ with open(log_file_path, "r") as file:
     timestamps.append(date_object)
     values.append(value)
 
-# plt.xkcd()
+plt.xkcd()
 plt.ylim(0, 100)
-plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(100))
 
-plt.title("ISS piss flow over time")
-plt.tight_layout()
+plt.gcf().canvas.manager.toolbar.pack_forget()  
+
+ax = plt.gca()
+ax.yaxis.set_major_formatter(mtick.PercentFormatter(100))
+ax.xaxis.set_major_locator(mdates.DayLocator())
+ax.xaxis.set_minor_locator(mdates.HourLocator(interval=3))
+
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+ax.xaxis.set_minor_formatter(mdates.DateFormatter('%H:%M'))
+
+
+plt.xlabel("Time")
+plt.ylabel("Fullness of piss tank")
+plt.title("International Space Station urine tank piss level")
 plt.plot(timestamps, values)
 plt.show()
+
