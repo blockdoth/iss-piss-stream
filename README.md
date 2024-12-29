@@ -1,4 +1,4 @@
-# ISS Piss Stream Monitor
+# ISS Piss Tank Stream Monitor
 ---
 ![Piss graph](./screenshots/piss-graph-xkcd.png)
 Ever wanted to know the contents of the piss tank of the international space station? Now you do!
