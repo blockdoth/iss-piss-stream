@@ -5,13 +5,13 @@ from datetime import datetime, timedelta
 import time, argparse
 
 parser = argparse.ArgumentParser(description='Piss stream straight from space')
+parser.add_argument('-l','--log', action = "store_true")
 parser.add_argument('-f','--log_file_path', type=str, default = "pisslog.csv")
 parser.add_argument('-p','--percentage_only', action = "store_true")
-parser.add_argument('-n','--no_log', action = "store_false")
 
 args = parser.parse_args()
 percentage_only = args.percentage_only
-no_log = args.no_log
+log = args.log
 log_file_path = args.log_file_path
 
 
@@ -31,7 +31,7 @@ class SubListener(SubscriptionListener):
     formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
     
     print(f"[{formatted_date}] International Space Station piss tank level: {value}%", flush=True)
-    if not no_log:
+    if log:
       with open(self.file_path, "a") as file:
         file.write(formatted_date + ", " + value + "\n")
 
