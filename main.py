@@ -5,15 +5,16 @@ from datetime import datetime, timedelta
 import time, argparse
 
 parser = argparse.ArgumentParser(description='Piss stream straight from space')
-parser.add_argument('-o','--log_file_path', type=str, default = None)
+parser.add_argument('-f','--log_file_path', type=str, default = "pisslog.csv")
 parser.add_argument('-p','--percentage_only', action = "store_true")
+parser.add_argument('-n','--no_log', action = "store_false")
+
 args = parser.parse_args()
 percentage_only = args.percentage_only
+no_log = args.no_log
+log_file_path = args.log_file_path
 
-if args.log_file_path:
-  log_file_path = args.log_file_path
-else:
-  log_file_path = "pisslog.csv"
+
 class SubListener(SubscriptionListener):
   def __init__(self, file_path, percentage_only):
     self.file_path = file_path  
@@ -30,15 +31,16 @@ class SubListener(SubscriptionListener):
     formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
     
     print(f"[{formatted_date}] International Space Station piss tank level: {value}%", flush=True)
-    
-    with open(self.file_path, "a") as file:
-      file.write(formatted_date + ", " + value + "\n")
+    if not no_log:
+      with open(self.file_path, "a") as file:
+        file.write(formatted_date + ", " + value + "\n")
 
 sub = Subscription(
   mode="MERGE",
   items=["NODE3000005"],
   fields = ["Value", "TimeStamp"]
 )
+
 sub.addListener(SubListener(log_file_path, percentage_only))
 sub.setRequestedSnapshot("yes")
 
