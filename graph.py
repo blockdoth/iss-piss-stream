@@ -1,9 +1,5 @@
-    
 import argparse, csv
 from datetime import datetime
-
-import shutil
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import matplotlib.dates as mdates
@@ -58,6 +54,4 @@ if __name__ == "__main__":
   parser.add_argument('-s','--save_plot', action = "store_true")
   args = parser.parse_args()
 
-  shutil.rmtree(mpl.get_cachedir())
-  
   pissualize(args.log_file_path, args.plot, args.save_plot, args.plot_out_path)
