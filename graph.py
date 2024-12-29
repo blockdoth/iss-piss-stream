@@ -30,7 +30,9 @@ def pissualize(log_file_path, plot, save_plot, plot_out_path):
   plt.figure(figsize=(10,5))
   plt.ylim(0, 100)
 
-  plt.gcf().canvas.manager.toolbar.pack_forget()  
+  if plt.gcf().canvas.manager.toolbar:
+    plt.gcf().canvas.manager.toolbar.pack_forget()  
+  
   ax = plt.gca()
   ax.yaxis.set_major_formatter(mtick.PercentFormatter(100))
   ax.xaxis.set_major_locator(mdates.DayLocator())
