@@ -1,6 +1,6 @@
 # ISS Piss Stream Monitor
 ---
-
+![Piss graph](./screenshots/piss-graph-xkcd.png)
 Ever wanted to know the contents of the piss tank of the international space station? Now you do!
 
 # Features
@@ -18,6 +18,8 @@ iss-piss-stream.url = "github:blockdoth/iss-piss-stream/{OPTIONAL-COMMIT_HASH}}"
 ```
 nix run github:blockdoth/iss-piss-stream 
 ```
+![nix run](./screenshots/nix-run.png)
+
 
 - Alternatively: 
 ```
@@ -36,4 +38,6 @@ Options:
     Specify the path for the log file. Default: pisslog.csv.
 
 - `-p, --percentage_only` \
-    Print only the percentage values to the console without timestamps or logging.
+    Print only the percentage values to the console without timestamps or logging. Usefull to when you want to add the result into a taskbar for example
+
+![taskbar](./screenshots/taskbar.png)

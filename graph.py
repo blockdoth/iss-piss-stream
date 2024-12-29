@@ -36,10 +36,7 @@ plt.gcf().canvas.manager.toolbar.pack_forget()
 ax = plt.gca()
 ax.yaxis.set_major_formatter(mtick.PercentFormatter(100))
 ax.xaxis.set_major_locator(mdates.DayLocator())
-ax.xaxis.set_minor_locator(mdates.HourLocator(interval=3))
-
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-ax.xaxis.set_minor_formatter(mdates.DateFormatter('%H:%M'))
 
 
 plt.xlabel("Time")
