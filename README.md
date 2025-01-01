@@ -49,7 +49,7 @@ nix run github:blockdoth/iss-piss-stream
 ![nix run](./screenshots/nix-run.png)
 
 
-Run the logger script using:
+Run the graphing script using:
 ```
 pyton graph.py [-f LOG_FILE_PATH] [-o PLOT_OUT_PATH] [-p] [-s] 
 ```
@@ -64,10 +64,9 @@ Options:
 - `-s, --save_plot` \
     Enable saving the plot as an image. Default: False
 
-![taskbar](./screenshots/taskbar.png)
 
 - Or use `nix run` to run it without installing
 ```
 nix run github:blockdoth/iss-piss-stream#iss-piss-graph
 ```
-![nix run](./screenshots/nix-run.png)
+
