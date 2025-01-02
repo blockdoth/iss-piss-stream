@@ -13,10 +13,10 @@ Ever wanted to know the contents of the piss tank of the international space sta
 ### Using Nix
 Specify it a as a flake input, (pick a commit, its likely I will break things)
 ```
-iss-piss-stream.url = "github:blockdoth/iss-piss-stream/{OPTIONAL-COMMIT_HASH}}";
+iss-piss-stream.url = "github:blockdoth/iss-piss-stream/{OPTIONAL-COMMIT-HASH}}";
 ```
 
-### Using python 
+### Using pip 
 ```
 git clone git@github.com:blockdoth/iss-piss-stream.git
 some venv thing? idk I dont use them
