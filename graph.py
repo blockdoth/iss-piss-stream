@@ -33,7 +33,11 @@ def pissualize(log_file_path, plot, save_plot, plot_out_path):
   
   ax = plt.gca()
   ax.yaxis.set_major_formatter(mtick.PercentFormatter(100))
-  ax.xaxis.set_major_locator(mdates.DayLocator())
+  
+  total_days = (timestamps[-1] - timestamps[0]).days
+  interval = max(1, total_days // 5)  
+  ax.xaxis.set_major_locator(mdates.DayLocator(interval=interval))
+
   ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
   plt.xlabel("Time")
