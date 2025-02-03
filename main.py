@@ -6,21 +6,16 @@ import time, argparse
 
 parser = argparse.ArgumentParser(description='Piss stream straight from space')
 parser.add_argument('-l','--log', action = "store_true")
-parser.add_argument('-f','--log_file_path', type=str, default = "./pisslog")
+parser.add_argument('-f','--log_file_path', type=str, default = "./pisslog.csv")
 parser.add_argument('-p','--percentage_only', action = "store_true")
-parser.add_argument('-pr','--prometheus', action = "store_true")
+parser.add_argument('-u','--unix', action = "store_true")
 
 args = parser.parse_args()
 percentage_only = args.percentage_only
 log = args.log
-prometheus = args.prometheus
+log_file_path = args.log_file_path
+unix = args.unix
 
-if prometheus:
-  extension = ".prom"
-else:
-  extension = ".csv"
-
-log_file_path = args.log_file_path + extension
 
 
 class SubListener(SubscriptionListener):
@@ -40,14 +35,13 @@ class SubListener(SubscriptionListener):
     
     print(f"[{formatted_date}] International Space Station piss tank level: {piss_level}%", flush=True)
     
-    if prometheus:
-      write_string = f"iss_piss_tank_level {piss_level} {datetime.timestamp(date)}\n"
-    else: # csv
-      write_string = f"{formatted_date}, {piss_level}\n"
-
+    if unix:
+      write_date = datetime.timestamp(date)
+    else:
+      write_date = formatted_date
     if log:
       with open(self.file_path, "a") as file:
-        file.write(write_string)
+        file.write(f"{write_date}, {piss_level}\n")
 
 sub = Subscription(
   mode="MERGE",
