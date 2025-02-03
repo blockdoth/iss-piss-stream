@@ -38,6 +38,7 @@
       devShell.x86_64-linux = pkgs.mkShell {
         packages = with pkgs; [
           local.lightstreamer-client-lib
+          python3Packages.prometheus-client
           python3Packages.matplotlib
           python3
         ];
