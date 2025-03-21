@@ -40,6 +40,7 @@
           local.lightstreamer-client-lib
           python3Packages.prometheus-client
           python3Packages.matplotlib
+          python3Packages.fastapi
           python3
         ];
       };
