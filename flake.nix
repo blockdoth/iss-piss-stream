@@ -25,7 +25,7 @@
         iss-piss-stream = pkgs.writers.writePython3Bin "iss-piss-stream" {
           libraries = [ local.lightstreamer-client-lib ];
           doCheck = false;
-        } (builtins.readFile ./main.py);
+        } (builtins.readFile ./logger.py);
         
         iss-piss-graph = pkgs.writers.writePython3Bin "iss-piss-stream" {
           libraries = [ pkgs.python3Packages.matplotlib];
